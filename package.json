@@ -1,0 +1,44 @@
+{
+  "name": "pulp-dep",
+  "version": "1.0.0",
+  "description": "PureScript Package Manager",
+  "author": "Bodil Stokke",
+  "license": "LGPL-3.0+",
+  "keywords": [
+    "purescript"
+  ],
+  "homepage": "https://github.com/bodil/pulp-dep#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bodil/pulp-dep.git"
+  },
+  "bugs": {
+    "url": "https://github.com/bodil/pulp-dep/issues"
+  },
+  "bin": {
+    "pulp-dep": "./pulp-dep.sh"
+  },
+  "config": {
+    "main": "Main",
+    "testMain": "Test.Main"
+  },
+  "scripts": {
+    "compile": "psc -c -f 'src/**/*.js' -f 'bower_components/purescript-*/src/**/*.js' 'src/**/*.purs' 'bower_components/purescript-*/src/**/*.purs'",
+    "bundle": "psc-bundle 'output/*/*.js' -o $npm_package_main -m $npm_package_config_main && echo \"module.exports = PS[\\\"$npm_package_config_main\\\"];\" >> $npm_package_main",
+    "build": "npm run compile",
+    "prepublish": "bower install && npm run build",
+    "compile-test": "psc -c -f 'src/**/*.js' -f 'test/**/*.js' -f 'bower_components/purescript-*/src/**/*.js' 'src/**/*.purs' 'test/**/*.purs' 'bower_components/purescript-*/src/**/*.purs'",
+    "bundle-test": "psc-bundle 'output/*/*.js' -o test.js -m $npm_package_config_testMain --main $npm_package_config_testMain",
+    "test": "npm run compile-test && npm run bundle-test && node test.js && rm -f test.js"
+  },
+  "dependencies": {
+    "cassowary": "0.0.2",
+    "home-or-tmp": "^2.0.0",
+    "jspm-bower-endpoint": "^0.3.2",
+    "jspm-npm": "^0.25.3"
+  },
+  "devDependencies": {
+    "bower": "^1.6.5",
+    "purescript": "^0.7.6-rc.1"
+  }
+}
